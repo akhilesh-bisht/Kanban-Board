@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import cors from "cors";
 import userRoutes from "./src/routes/userRoutes.js";
-import boardRoutes from "./src/routes/boardRoutes.js";
+import boardRoutes from "./src/routes/boardRoute.js";
 import listRoutes from "./src/routes/listRoute.js";
 import taskRoutes from "./src/routes/taskRoute.js";
 

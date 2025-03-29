@@ -1,10 +1,10 @@
 import express from "express";
-import { createBoard, getBoards } from "../controllers/boardController.js";
+import { createList, getLists } from "../controllers/list.controller.js";
 import authMiddleware from "../middlewares/authMiddleware.js";
 
 const router = express.Router();
 
-router.post("/", authMiddleware, createBoard);
-router.get("/", authMiddleware, getBoards);
+router.post("/", authMiddleware, createList);
+router.get("/", authMiddleware, getLists);
 
 export default router;
