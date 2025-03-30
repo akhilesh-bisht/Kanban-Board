@@ -7,7 +7,7 @@
 // } from "react-router-dom";
 // import Login from "./pages/Login";
 // import Register from "./pages/Register";
-// import Dashboard from "./pages/Dashboard";
+// // import Dashboard from "./pages/Dashboard";
 // import { getToken } from "./utils/auth";
 // import "./index.css";
 
@@ -15,7 +15,12 @@
 //   const [isAuthenticated, setIsAuthenticated] = useState(!!getToken());
 
 //   useEffect(() => {
-//     setIsAuthenticated(!!getToken());
+//     const syncAuthState = () => {
+//       setIsAuthenticated(!!getToken());
+//     };
+
+//     window.addEventListener("storage", syncAuthState);
+//     return () => window.removeEventListener("storage", syncAuthState);
 //   }, []);
 
 //   return (
@@ -25,10 +30,25 @@
 //           path="/"
 //           element={isAuthenticated ? <Dashboard /> : <Navigate to="/login" />}
 //         />
-//         <Route path="/login" element={<Login setAuth={setIsAuthenticated} />} />
+//         <Route
+//           path="/login"
+//           element={
+//             isAuthenticated ? (
+//               <Navigate to="/" />
+//             ) : (
+//               <Login setAuth={setIsAuthenticated} />
+//             )
+//           }
+//         />
 //         <Route
 //           path="/register"
-//           element={<Register setAuth={setIsAuthenticated} />}
+//           element={
+//             isAuthenticated ? (
+//               <Navigate to="/" />
+//             ) : (
+//               <Register setAuth={setIsAuthenticated} />
+//             )
+//           }
 //         />
 //       </Routes>
 //     </Router>
@@ -37,22 +57,22 @@
 
 // export default App;
 
-import React, { useState } from "react";
-import BoardList from "./components/BoardList";
-import ListView from "./components/ListView";
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 
-const App = () => {
-  const [selectedBoard, setSelectedBoard] = useState(null);
-
+function App() {
   return (
-    <div className="p-8">
-      <h1 className="text-3xl font-bold">Kanban Board</h1>
-      <div className="flex gap-4">
-        <BoardList onSelectBoard={setSelectedBoard} />
-        {selectedBoard && <ListView boardId={selectedBoard} />}
-      </div>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        {/* Default route redirects to register */}
+        <Route path="*" element={<Register />} />
+      </Routes>
+    </Router>
   );
-};
+}
 
 export default App;
